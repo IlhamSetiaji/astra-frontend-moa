@@ -5,31 +5,41 @@
         <h1 class="card-title text-center">LOGIN</h1>
       </div>
       <div class="card-text">
-        <!-- <font-awesome-icon icon="fa-solid fa-user-secret" /> -->
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
+            <label
+              for="exampleInputEmail1"
+              class="form-label d-flex justify-content-start"
               >Email address</label
             >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              v-model="email"
-            />
+            <div class="form-float">
+              <i class="icon fa-solid fa-envelope fa-lg"></i>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                v-model="email"
+              />
+            </div>
+
             <div id="emailHelp" class="form-text"></div>
           </div>
           <div class="mb-4">
-            <label for="exampleInputPassword1" class="form-label"
+            <label
+              for="exampleInputPassword1"
+              class="form-label d-flex justify-content-start"
               >Password</label
             >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              v-model="password"
-            />
+            <div class="form-float">
+              <i class="icon fa-solid fa-key fa-lg"></i>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                v-model="password"
+              />
+            </div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary mb-5">LOGIN</button>
@@ -49,6 +59,7 @@ export default {
       email: "",
       password: "",
       errorMessage: "",
+      sessionTimer: null,
     };
   },
   methods: {
@@ -67,12 +78,19 @@ export default {
         this.errorMessage = "";
         alert("Login successful!"); // Replace this with your desired action after successful login
 
-        // Redirect the user to the Main Page after successful login
+        // Redirect the user to the Home page after successful login
         this.$router.push({ name: "HomeView" });
 
         // Set session time (5 minutes)
         const sessionTime = 300000; // 5 minutes in milliseconds
-        setTimeout(() => {
+
+        // Clear any existing session timer
+        if (this.sessionTimer) {
+          clearTimeout(this.sessionTimer);
+        }
+
+        // Start a new session timer
+        this.sessionTimer = setTimeout(() => {
           // Logout user after session time expires
           this.logout();
         }, sessionTime);
@@ -90,6 +108,24 @@ export default {
       this.$router.push({ name: "LoginPage" });
     },
   },
+  created() {
+    // Check if the user is authenticated (e.g., session still active)
+    const isAuthenticated = this.email && this.password;
+
+    if (isAuthenticated) {
+      // If the user is authenticated, redirect to the Home page
+      this.$router.push({ name: "HomeView" });
+
+      // Set session time (5 minutes)
+      const sessionTime = 300000; // 5 minutes in milliseconds
+
+      // Start a new session timer
+      this.sessionTimer = setTimeout(() => {
+        // Logout user after session time expires
+        this.logout();
+      }, sessionTime);
+    }
+  },
 };
 </script>
 
@@ -99,9 +135,22 @@ body {
   height: 100%;
   background-color: #e0dcdc;
 }
-.card-body,
 .login-form {
   color: white;
+}
+.icon {
+  color: rgb(49, 49, 49);
+  position: absolute;
+  top: calc(50%);
+  left: 0.5rem;
+}
+.form-float {
+  position: relative;
+}
+.form-float label,
+.form-float .form-control {
+  left: 0.5rem;
+  padding-left: 2.25rem;
 }
 .global-container {
   height: 100vh;
