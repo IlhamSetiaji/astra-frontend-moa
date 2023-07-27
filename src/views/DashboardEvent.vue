@@ -4,9 +4,12 @@
       <div class="flex h-fit gap-2">
         <button
           class="px-3 bg-[#FF9900] rounded-full text-white font-medium"
+          @click="openModal"
         >
           INPUT DATA
         </button>
+
+        <!-- Filter -->
         <select
           name=""
           id="event"
@@ -52,11 +55,49 @@
         </div>
       </div>
     </div>
+
     <div class="w-full bg-[#FF9900] text-white text-center font-bold mt-2">
       <p>DATA EVENT</p>
     </div>
+
+    <!-- Table -->
     <div class="mt-1">
       <TableEvent />
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center" v-if="showModal">
+    <div class=" bg-white p-[20px] rounded-[8px] w-1/2 shadow">
+      <p class="text-lg font-bold">Input Data ADEX</p>
+      <div class="bg-[#FF9900] h-[0.2rem] w-40"/>
+      <form class="mt-3">
+        <label for="">
+          Brand
+        </label>
+        <input type="text" class="w-full border border-[#DFD9D9] rounded-[8px] px-[10px] py-[5px] mt-[5px]" placeholder="Nama Brand"/>
+  
+        <label for=""  class="mt-3">type</label>
+        <select name="" id="" class="w-full border border-[#DFD9D9] rounded-[8px] px-[10px] py-[5px] mt-[5px]">
+          <option hidden>Pilih Type</option>
+          <option value="">1</option>
+          <option value="">2</option>
+          <option value="">3</option>
+        </select>
+  
+        <label for=""  class="mt-3">Metode Pembayaran</label>
+        <select name="" id="" class="w-full border border-[#DFD9D9] rounded-[8px] px-[10px] py-[5px] mt-[5px]">
+          <option hidden>Pilih Metode Pembayaran</option>
+          <option value="">1</option>
+          <option value="">2</option>
+          <option value="">3</option>
+        </select>
+  
+        <button class="bg-[#FF9900] rounded px-3 py-1 text-lg font-medium text-white mt-10">INPUT DATA</button>
+        <button class="bg-gray-100 rounded px-5 py-1 text-lg font-medium mt-10 float-right border hover:bg-gray-200" @click="closeModal">Close</button>
+      </form>
+
     </div>
   </div>
 </template>
@@ -68,6 +109,19 @@ export default {
   name: "DashboardEvent",
   components: {
     TableEvent,
+  },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
+  methods: {
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
   },
 };
 </script>

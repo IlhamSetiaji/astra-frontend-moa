@@ -29,22 +29,22 @@
         <tbody>
             <tr class="bg-white border-b">
                 <th scope="row" class="px-3 py-2 font-medium">
-                    1
+                   
                 </th>
                 <td class="px-3 py-2">
-                    Silver
+                   
                 </td>
                 <td class="px-3 py-2">
-                    Laptop
+                    
                 </td>
                 <td class="px-3 py-2">
-                    $2999
+                    
                 </td>
                 <td class="px-3 py-2">
-                    $2999
+                    
                 </td>
                 <td class="px-3 py-2">
-                    $2999
+                    
                 </td>
                 <td class="px-3 py-2 flex gap-2 w-fit">
                     <a href="#" class="font-medium"><img class="w-5" src="icon_open.png" /></a>
