@@ -1,52 +1,31 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 min-vh-100 d-md-block sidebar">
+        <SideBar />
+      </nav>
+      <!-- Main Content Area -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <!-- Place your content here -->
+        <h1>Main Content Area</h1>
+      </main>
+    </div>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import SideBar from "../components/SideBar.vue";
 
 export default {
-  name: "HomeView",
-  methods: {
-    handleLogout() {
-      // Perform any necessary cleanup or logout logic here
-      // For simplicity, we'll just redirect the user back to the login page
-      this.$router.push({ name: "LoginPage" });
-    },
-  },
   components: {
-    HelloWorld,
+    SideBar,
   },
 };
 </script>
+
+<style scoped>
+.sidebar {
+  background-color: #e0dcdc;
+}
+</style>
