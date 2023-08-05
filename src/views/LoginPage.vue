@@ -13,7 +13,7 @@
               >Email address</label
             >
             <div class="form-float">
-              <i class="icon fa-solid fa-envelope fa-lg"></i>
+              <i class="icon fa-solid fa-envelope fa-lg envelope-icon"></i>
               <input
                 type="email"
                 class="form-control"
@@ -32,13 +32,19 @@
               >Password</label
             >
             <div class="form-float">
-              <i class="icon fa-solid fa-key fa-lg"></i>
+              <i class="icon fa-solid fa-key fa-lg key-icon"></i>
               <input
-                type="password"
                 class="form-control"
                 id="exampleInputPassword1"
                 v-model="password"
+                :type="showPassword ? 'text' : 'password'"
               />
+              <!-- Eye icon to toggle password visibility -->
+              <i
+                class="icon fa-solid fa-eye eye-icon"
+                :class="{ 'fa-eye-slash': !showPassword }"
+                @click="showPassword = !showPassword"
+              ></i>
             </div>
           </div>
           <div class="text-center">
@@ -67,7 +73,8 @@ export default {
       password: "",
       error: null,
       showModal: false, // New data property for modal visibility
-      loginError: null, // New data property for storing error message
+      loginError: null,
+      showPassword: false, // New data property for storing error message
     };
   },
   methods: {
@@ -101,11 +108,19 @@ body {
 .login-form {
   color: white;
 }
-.icon {
+.key-icon,
+.envelope-icon {
   color: rgb(49, 49, 49);
   position: absolute;
   top: calc(50%);
   left: 0.5rem;
+}
+.eye-icon {
+  position: absolute;
+  top: calc(50% - 0.5rem);
+  right: 0.75rem;
+  cursor: pointer;
+  color: rgb(49, 49, 49);
 }
 .form-float {
   position: relative;

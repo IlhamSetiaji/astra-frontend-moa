@@ -44,7 +44,7 @@ export default createStore({
         },
       ];
 
-      const expirationDate = new Date().getTime() + 60 * 1000; // 1 minute from now
+      const expirationDate = new Date().getTime() + 300 * 1000; // 1 minute from now
       localStorage.setItem("tokenExpiration", expirationDate);
 
       const user = users.find(
