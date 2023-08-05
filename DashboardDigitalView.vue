@@ -1,0 +1,295 @@
+<template>
+  
+  <div>
+    <div class="sidebar">
+      <div class="Prom">PROM</div>
+      <div class="Dept">DEPT</div>
+      <div class="event-button-container">
+        <div class="event-button">Event</div>
+      </div>
+      <hr>
+      <div class="Rectangle68" style="width: 250px; height: 40px; flex-shrink: 0;background: #5C8271">
+        <div class="PilihSection">PILIH SECTION</div>
+      </div>
+      <div class="Rectangle62" style="width: 220; height: 100px; flex-shrink: 0;background: white">
+        <div class="Event" style="color: #000; font-family: Roboto;font-size: 22px;font-style: normal;font-weight: 200; line-height: normal; ">Event</div>
+        <hr style="border: 1px solid #DDD; margin: 10px 0;">
+        <div class="Digital" style="color: black; font-size: 22px; font-family: Roboto; font-weight: 500; word-wrap: break-word">Digital</div>
+      </div>
+      
+      <div class="logout-button-container">
+        <div class="logout-button">Logout</div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-container" style="position: fixed; height: 50vh; width: 90vw; left: 300px">
+    <canvas id="myChart"></canvas>
+    <br />
+    <p><b>ADEX HYUNDAI</b></p>
+    <hr>
+    <div style="display: flex; align-items: center;"></div>
+    <button type="button" class="custom-btn" style="margin: 10px; width: 100px; background-color: #FF9900; color: white; float: left;" @click="handleInputDataClick">Input Data</button>
+    <div class="dropdown" style="margin: 10px;">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+   TYPE
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+
+</div>
+    
+  </div>
+
+
+  <div class="chart-container" style="position: fixed; height: 50vh; width: 90vw; left: 650px">
+    <canvas id="myChartPie"></canvas>
+    <br />
+    <p><b>ADEX HONDA</b></p>
+  </div>
+  <div class="chart-container" style="position: fixed; height: 50vh; width: 90vw; left: 1000px">
+    <canvas id="myChartPie2"></canvas>
+    <br />
+    <p class="Mitsubitshi"><b>ADEX MITSUBITSHI</b></p>
+  </div>
+
+  
+</template>
+
+<script>
+import Chart from "chart.js/auto";
+
+export default {
+  //   name: "HelloWorld",
+  //   props: {
+  //     msg: String,
+  //   },
+  mounted() {
+    console.log("Component mounted.");
+
+    const ctx = document.getElementById("myChart");
+    const ctu = document.getElementById("myChartPie");
+    const ctv = document.getElementById("myChartPie2");
+
+    const data = {
+      labels: ["Event A", "Event B", "Event C", "Event D"],
+      datasets: [
+        {
+          label: "Hyundai",
+          data: [10, 10, 10, 70],
+          // backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+          backgroundColor: ["rgb(226,137,242)", "rgb(133,92,248)", "rgb(176,133,255)", "rgb(80,55,149)"],
+          hoverOffset: 25,
+        },
+      ],
+    };
+
+    const datas = {
+      labels: ["Event A", "Event B", "Event C", "Event D"],
+      datasets: [
+        {
+          label: "Honda",
+          data: [10, 10, 10, 70],
+          // backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+          backgroundColor: ["rgb(226,137,242)", "rgb(133,92,248)", "rgb(176,133,255)", "rgb(80,55,149)"],
+          hoverOffset: 25,
+        },
+      ],
+    };
+
+    const datass = {
+      labels: ["Event A", "Event B", "Event C", "Event D"],
+      datasets: [
+        {
+          label: "Mitsubitshi",
+          data: [10, 10, 10, 70],
+          // backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+          backgroundColor: ["rgb(226,137,242)", "rgb(133,92,248)", "rgb(176,133,255)", "rgb(80,55,149)"],
+          hoverOffset: 25,
+        },
+      ],
+    };
+
+    const myChart = new Chart(ctx, {
+      type: "pie",
+      data: data,
+    });
+
+    const myChartPie = new Chart(ctu, {
+      type: "pie",
+      data: datas,
+    });
+
+    const myChartPie2 = new Chart(ctv, {
+      type: "pie",
+      data: datass,
+    });
+
+    myChart;
+    myChartPie;
+    myChartPie2;
+  },
+};
+
+
+</script>
+
+
+
+
+<style>
+
+
+.custom-btn {
+  
+ 
+  background-color: #FF9900;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+    
+  width: 167.316px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+    
+   
+  border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .custom-btn:hover {
+    
+   
+  background-color: #FFCC66;
+  }
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+p.Mitsubitshi {
+  text-align: left;
+  text-indent: 90px;
+}
+p {
+  text-align: left;
+  text-indent: 110px;
+}
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #D9D9D9;
+    padding-top: 20px;
+  }
+  .sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+  }
+  .sidebar a:hover {
+    background-color: #d9d9d9;
+  }
+  
+
+  
+  .menu-link {
+    color: white;
+  }
+  
+  .logout-button {
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+    background-color: #FF9900;
+    border-radius: 22px;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  .logout-button:hover {
+    background-color: #FFCC66;
+  }
+  .content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+  
+  .PilihSection {
+    color: white;
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .Prom {
+    width: 286px;
+    height: 107px;
+    color: white;
+    font-size: 64px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+ 
+  .Dept {
+    width: 248px;
+    height: 107px;
+    color: white;
+    font-size: 64px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /* Add style for the event button */
+  .event-button {
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+    background-color: #F90;
+    border-radius: 22px;
+  
+    padding: 10px 10px;
+    cursor: pointer;
+  }
+  .event-button:hover {
+    background-color: #F90;
+
+  }
+  
+  .rectangle68 {
+    width: 100%;
+    height: 100%;
+    background: #5C8271;
+  }
+</style>
