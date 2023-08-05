@@ -99,17 +99,14 @@ export default createStore({
       if (token && userId && expirationDate) {
         const currentTime = new Date().getTime();
         if (currentTime < +expirationDate) {
-          // The token is still valid, so the user is authenticated.
           context.commit("setUser", {
             token: token,
             userId: userId,
           });
 
-          // Calculate the time remaining until the token expires and set the logout timer.
           const expiresIn = +expirationDate - currentTime;
           context.dispatch("setLogoutTimer", expiresIn);
         } else {
-          // The token has expired, log the user out.
           context.dispatch("logout");
         }
       }
@@ -123,6 +120,7 @@ export default createStore({
       setTimeout(() => {
         context.dispatch("logout");
       }, expirationTime);
+      context.commit("setLogoutTimer", expirationTime); // Tambahkan baris ini
     },
   },
   modules: {},

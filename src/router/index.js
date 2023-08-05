@@ -1,29 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "../views/LoginPage.vue";
 import HomeView from "../views/HomeView.vue";
-import store from "../store"; // Pastikan path-nya sesuai dengan struktur folder Anda
+import store from "../store";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView, // Add the component that should be rendered for the home page
-    beforeEnter: (to, from, next) => {
-      store.dispatch("autoLogin").then(() => {
-        if (store.getters.isAuthenticated) {
-          // If the user is authenticated, allow access to the home page
-          next();
-        } else {
-          // If the user is not authenticated, redirect to the login page
-          next({ name: "login" });
-        }
-      });
-    },
+    component: HomeView,
+    meta: { requiresAuth: true }, // Tambahkan properti meta untuk menandai halaman yang memerlukan otentikasi
   },
   {
     path: "/login",
     name: "login",
     component: LoginPage,
+    meta: { requiresUnauth: true }, // Tambahkan properti meta untuk menandai halaman yang memerlukan non-autentikasi
   },
   {
     path: "/home",
@@ -31,12 +22,23 @@ const routes = [
     components: {
       default: HomeView,
     },
+    meta: { requiresAuth: true }, // Tambahkan properti meta untuk menandai halaman yang memerlukan otentikasi
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(function (to, _, next) {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    next("/login");
+  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+    next("/home");
+  } else {
+    next();
+  }
 });
 
 export default router;
