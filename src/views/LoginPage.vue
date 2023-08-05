@@ -5,7 +5,7 @@
         <h1 class="card-title text-center">LOGIN</h1>
       </div>
       <div class="card-text">
-        <form @submit.prevent="handleLogin">
+        <form @submit.prevent="login">
           <div class="mb-3">
             <label
               for="exampleInputEmail1"
@@ -43,88 +43,51 @@
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary mb-5">LOGIN</button>
-            <p class="text-danger">{{ errorMessage }}</p>
+            <p class="text-danger">{{ error }}</p>
           </div>
         </form>
       </div>
     </div>
   </div>
+  <ErrorModal
+    :show="showModal"
+    :errorMessage="loginError"
+    @close="showModal = false"
+  />
 </template>
 
 <script>
+// Import the ErrorModal component
+import ErrorModal from "../components/ErrorModal.vue";
+
 export default {
-  name: "LoginPage",
   data() {
     return {
       email: "",
       password: "",
-      errorMessage: "",
-      sessionTimer: null,
+      error: null,
+      showModal: false, // New data property for modal visibility
+      loginError: null, // New data property for storing error message
     };
   },
   methods: {
-    handleLogin() {
-      // Dummy credentials (Replace these with your real authentication logic)
-      const dummyCredentials = {
-        email: "test@example.com",
-        password: "password123",
-      };
-
-      if (
-        this.email === dummyCredentials.email &&
-        this.password === dummyCredentials.password
-      ) {
-        // Successful login
-        this.errorMessage = "";
-        alert("Login successful!"); // Replace this with your desired action after successful login
-
-        // Redirect the user to the Home page after successful login
-        this.$router.push({ name: "HomeView" });
-
-        // Set session time (5 minutes)
-        const sessionTime = 300000; // 5 minutes in milliseconds
-
-        // Clear any existing session timer
-        if (this.sessionTimer) {
-          clearTimeout(this.sessionTimer);
-        }
-
-        // Start a new session timer
-        this.sessionTimer = setTimeout(() => {
-          // Logout user after session time expires
-          this.logout();
-        }, sessionTime);
-      } else {
-        // Invalid credentials
-        this.errorMessage = "Invalid email or password";
+    async login() {
+      try {
+        const actionPayload = {
+          email: this.email,
+          password: this.password,
+        };
+        await this.$store.dispatch("login", actionPayload);
+        this.$router.replace("/home"); // Redirect to the Home page after successful login
+      } catch (error) {
+        this.loginError = error.message;
+        this.showModal = true; // Show the modal when login fails
+        console.log(this.loginError);
       }
     },
-    logout() {
-      // Reset user credentials and redirect to login page
-      this.email = "";
-      this.password = "";
-      this.errorMessage = "";
-      alert("Your session has expired. Please log in again."); // Replace this with your desired action upon logout
-      this.$router.push({ name: "LoginPage" });
-    },
   },
-  created() {
-    // Check if the user is authenticated (e.g., session still active)
-    const isAuthenticated = this.email && this.password;
-
-    if (isAuthenticated) {
-      // If the user is authenticated, redirect to the Home page
-      this.$router.push({ name: "HomeView" });
-
-      // Set session time (5 minutes)
-      const sessionTime = 300000; // 5 minutes in milliseconds
-
-      // Start a new session timer
-      this.sessionTimer = setTimeout(() => {
-        // Logout user after session time expires
-        this.logout();
-      }, sessionTime);
-    }
+  components: {
+    ErrorModal, // Register the ErrorModal component
   },
 };
 </script>
