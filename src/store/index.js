@@ -35,67 +35,47 @@ export default createStore({
   },
   actions: {
     async login(context, payload) {
-      // Simulate a login with dummy data
-      const users = [
-        {
-          id: 1,
-          email: "user@example.com",
-          password: "password123",
-        },
-      ];
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
 
-      const expirationDate = new Date().getTime() + 300 * 1000; // 1 minute from now
-      localStorage.setItem("tokenExpiration", expirationDate);
+        if (response.ok) {
+          const responseData = await response.json();
+          if (responseData.data && responseData.data.user) {
+            const user = responseData.data.user;
+            const token = responseData.data.token;
+            const expirationDate = new Date().getTime() + 300 * 1000;
 
-      const user = users.find(
-        (user) =>
-          user.email === payload.email && user.password === payload.password
-      );
+            localStorage.setItem("token", token);
+            localStorage.setItem("userId", user.id);
+            localStorage.setItem("tokenExpiration", expirationDate);
 
-      if (!user) {
-        const error = new Error("Invalid email or password.");
+            context.commit("setUser", {
+              token: token,
+              userId: user.id,
+            });
+          } else {
+            throw new Error("Invalid response format");
+          }
+        } else {
+          throw new Error("Failed to authenticate. Check your login data.");
+        }
+      } catch (error) {
+        console.log(error);
         throw error;
       }
-
-      // Simulate a successful login
-      const dummyResponse = {
-        data: {
-          meta: {
-            code: 200,
-            message: "Login successful",
-          },
-          data: {
-            token: "dummy_token",
-            user: {
-              id: user.id,
-              // other user data
-            },
-          },
-        },
-      };
-
-      const responseMeta = dummyResponse.data.meta;
-      const responseData = dummyResponse.data.data;
-
-      if (responseMeta.code !== 200) {
-        const error = new Error(
-          responseMeta.message ||
-            "Failed to authenticate. Check your login data."
-        );
-        throw error;
-      }
-
-      localStorage.setItem("token", responseData.token);
-      localStorage.setItem("userId", responseData.user.id);
-      context.commit("setUser", {
-        token: responseData.token,
-        userId: responseData.user.id,
-      });
     },
+
     autoLogin(context) {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
       const expirationDate = localStorage.getItem("tokenExpiration");
+
       if (token && userId && expirationDate) {
         const currentTime = new Date().getTime();
         if (currentTime < +expirationDate) {
@@ -111,16 +91,18 @@ export default createStore({
         }
       }
     },
-    logout(context) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      context.commit("logout");
-    },
+
     setLogoutTimer(context, expirationTime) {
       setTimeout(() => {
         context.dispatch("logout");
       }, expirationTime);
-      context.commit("setLogoutTimer", expirationTime); // Tambahkan baris ini
+      context.commit("setLogoutTimer", expirationTime);
+    },
+    logout(context) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("tokenExpiration");
+      context.commit("logout");
     },
   },
   modules: {},

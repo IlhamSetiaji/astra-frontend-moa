@@ -8,7 +8,7 @@
         <!-- Main Content Area -->
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <!-- Place your content here -->
-          <h1>Main Content Area</h1>
+          <!-- <h1>Main Content Area</h1> -->
           <router-view></router-view>
         </main>
       </div>

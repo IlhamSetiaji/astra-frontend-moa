@@ -57,7 +57,7 @@
   </div>
   <ErrorModal
     :show="showModal"
-    :errorMessage="loginError"
+    :errorMessage="loginError || 'Invalid email or password'"
     @close="showModal = false"
   />
 </template>
@@ -85,10 +85,10 @@ export default {
           password: this.password,
         };
         await this.$store.dispatch("login", actionPayload);
-        this.$router.replace("/home"); // Redirect to the Home page after successful login
+        this.$router.replace("/events");
       } catch (error) {
         this.loginError = error.message;
-        this.showModal = true; // Show the modal when login fails
+        this.showModal = true;
         console.log(this.loginError);
       }
     },

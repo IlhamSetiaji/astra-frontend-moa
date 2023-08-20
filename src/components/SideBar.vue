@@ -7,13 +7,13 @@
           DEPT
         </h1>
       </b>
-
       <div class="aktif">
         <b>
-          <p class="text-white" id="activeLinkText">Event</p>
+          <p class="text-white" id="activeLinkText">
+            {{ activeLinkText }}
+          </p>
         </b>
       </div>
-      <!-- Menu 1: Event -->
       <table class="table bg-light mt-4">
         <thead>
           <tr class="header-table text-white">
@@ -23,22 +23,22 @@
         <tbody>
           <tr>
             <th scope="row">
-              <a href="#">Event</a>
+              <router-link to="/events">Event</router-link>
             </th>
           </tr>
           <tr>
             <th scope="row">
-              <a href="#">Event Digital</a>
+              <router-link to="/events-digital">Event Digital</router-link>
             </th>
           </tr>
           <tr>
             <th scope="row">
-              <a href="#">Adex/Brand</a>
+              <router-link to="/adex-brand">Adex/Brand</router-link>
             </th>
           </tr>
           <tr>
             <th scope="row">
-              <a href="#">Rekap Data</a>
+              <router-link to="/rekap-data">Rekap Data</router-link>
             </th>
           </tr>
         </tbody>
@@ -46,7 +46,7 @@
     </div>
   </nav>
   <!-- Tombol Logout -->
-  <div class="position-absolute bottom-0 mb-3">
+  <div id="button" class="position-fixed bottom-0 mb-3">
     <button class="btn btn-danger btn-block" @click="logout">Logout</button>
   </div>
 </template>
@@ -54,6 +54,21 @@
 <script>
 export default {
   name: "SideBar",
+  computed: {
+    activeLinkText() {
+      const routeName = this.$route.name;
+      if (routeName === "events") {
+        return "Event";
+      } else if (routeName === "events-digital") {
+        return "Event Digital";
+      } else if (routeName === "adex-brand") {
+        return "Adex/Brand";
+      } else if (routeName === "rekap-data") {
+        return "Rekap Data";
+      }
+      return "";
+    },
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
@@ -91,5 +106,20 @@ a {
 }
 .sidebar {
   background-color: #e0dcdc;
+}
+#sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh; /* Adjust as needed */
+  overflow-y: auto;
+}
+#button {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0 15px;
+}
+.nav-link.active {
+  color: #ff9c04;
 }
 </style>
