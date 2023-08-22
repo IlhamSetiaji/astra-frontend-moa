@@ -117,38 +117,6 @@ export default {
         brand_id: this.selectedBrandId,
       };
 
-      if (this.joinEvent === "1") {
-        // Perbandingan dengan "1" (string) bukan 1 (angka)
-        const userId = localStorage.getItem("userId");
-        const participantData = {
-          event_id: this.event.id,
-          user_id: userId,
-          is_attend: this.isAttend,
-        };
-
-        try {
-          const participantResponse = await fetch(
-            "http://127.0.0.1:8000/api/event-participants",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(participantData),
-            }
-          );
-
-          const participantResult = await participantResponse.json();
-          console.log("Participant data sent successfully:", participantResult);
-          this.closeModal();
-        } catch (error) {
-          console.error(
-            "An error occurred while sending participant data:",
-            error
-          );
-        }
-      }
-
       if (this.selectedBrandId) {
         try {
           const response = await fetch(
@@ -164,6 +132,30 @@ export default {
 
           const result = await response.json();
           console.log("Data sent successfully:", result);
+
+          // Check if the response status is 201 (Created)
+          if (response.status === 201 && this.selectedBrandId) {
+            try {
+              const incrementResponse = await fetch(
+                `http://127.0.0.1:8000/api/brands/${this.selectedBrandId}/increment-result`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              const incrementResult = await incrementResponse.json();
+              console.log("Increment result successful:", incrementResult);
+            } catch (error) {
+              console.error(
+                "An error occurred while incrementing result:",
+                error
+              );
+            }
+          }
+
           this.closeModal();
         } catch (error) {
           console.error("An error occurred:", error);

@@ -23,7 +23,6 @@
                 v-model="selectedEventType"
                 class="form-select event-type"
               >
-                <option value="" class="bg-light">Event Type</option>
                 <option value="1" class="bg-light">Webinar</option>
                 <option value="2" class="bg-light">Workshop</option>
                 <option value="3" class="bg-light">Investor Gathering</option>
@@ -53,7 +52,7 @@
                 type="text"
               />
 
-              <label>NV: </label>
+              <label class="mt-2">NV: </label>
               <div class="form-check form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -71,8 +70,8 @@
                 />
                 <label> No</label>
               </div>
-
-              <label for="visitors">Visitors:</label>
+              <br />
+              <label for="visitors" class="mt-2">Visitors:</label>
               <input
                 class="form-control"
                 id="visitors"

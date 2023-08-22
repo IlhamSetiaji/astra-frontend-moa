@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "../views/LoginPage.vue";
 import HomeView from "../views/HomeView.vue";
 import EventsList from "../components/events/EventsList.vue";
+import AdexChart from "../components/adex/AdexChart.vue";
 import store from "../store";
 
 const routes = [
@@ -28,6 +29,12 @@ const routes = [
     path: "/events-digital",
     name: "events-digital",
     component: EventsList,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/adex-brand",
+    name: "adex-brand",
+    component: AdexChart,
     meta: { requiresAuth: true },
   },
 ];
