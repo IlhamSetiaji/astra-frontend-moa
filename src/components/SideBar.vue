@@ -44,11 +44,12 @@
         </tbody>
       </table>
     </div>
+    <div class="button-container">
+      <button id="button" class="btn btn-danger btn-block" @click="logout">
+        Logout
+      </button>
+    </div>
   </nav>
-  <!-- Tombol Logout -->
-  <div id="button" class="position-fixed bottom-0 mb-3">
-    <button class="btn btn-danger btn-block" @click="logout">Logout</button>
-  </div>
 </template>
 
 <script>
@@ -82,7 +83,7 @@ export default {
 .btn {
   background-color: #ff9c04;
   font-weight: bold;
-  width: 170px;
+  width: 200px;
   border-color: #ff9c04;
   border-radius: 25px;
 }
@@ -114,10 +115,22 @@ a {
   overflow-y: auto;
 }
 #button {
-  position: fixed;
+  background-color: #ff9c04;
+  font-weight: bold;
+  border-color: #ff9c04;
+  border-radius: 25px;
+  margin: 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
   bottom: 0;
-  width: 100%;
-  padding: 0 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  position: absolute;
+  margin-bottom: 15px;
 }
 .nav-link.active {
   color: #ff9c04;

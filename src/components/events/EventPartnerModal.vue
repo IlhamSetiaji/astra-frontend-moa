@@ -90,11 +90,6 @@ export default {
       brands: [],
     };
   },
-  computed: {
-    isJoiningEvent() {
-      return this.joinEvent === "1";
-    },
-  },
   mounted() {
     this.fetchBrands();
   },
@@ -155,10 +150,38 @@ export default {
               );
             }
           }
-
           this.closeModal();
         } catch (error) {
           console.error("An error occurred:", error);
+        }
+      }
+      if (this.joinEvent) {
+        try {
+          const participantData = {
+            user_id: localStorage.getItem("userId"),
+            event_id: this.event.id,
+            is_attend: this.isAttend,
+          };
+
+          const participantResponse = await fetch(
+            "http://127.0.0.1:8000/api/event-participants",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(participantData),
+            }
+          );
+
+          const participantResult = await participantResponse.json();
+          console.log("Participant data sent successfully:", participantResult);
+          this.closeModal();
+        } catch (error) {
+          console.error(
+            "An error occurred while sending participant data:",
+            error
+          );
         }
       }
     },

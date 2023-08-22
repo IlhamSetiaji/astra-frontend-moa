@@ -3,6 +3,7 @@ import LoginPage from "../views/LoginPage.vue";
 import HomeView from "../views/HomeView.vue";
 import EventsList from "../components/events/EventsList.vue";
 import AdexChart from "../components/adex/AdexChart.vue";
+import DigitalChart from "../components/digital/DigitalChart.vue";
 import store from "../store";
 
 const routes = [
@@ -29,6 +30,12 @@ const routes = [
     path: "/events-digital",
     name: "events-digital",
     component: EventsList,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/rekap-data",
+    name: "rekap-data",
+    component: DigitalChart,
     meta: { requiresAuth: true },
   },
   {
